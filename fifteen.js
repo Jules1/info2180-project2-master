@@ -5,7 +5,7 @@
   var rows_columns = 4;
   var EX = 3;
   var EY = 3;
-  document.getElementById("shufflebutton").onclick = function() {shuffle()}; 
+
 
   function load(){   
     drawPuzzle(); 
@@ -15,6 +15,7 @@
   function drawPuzzle(){  //Function to draw the puzzle area
       var puzzleArea = document.getElementById("puzzlearea");
       var tile = puzzleArea.children;
+      $("#shufflebutton").click(shuffle);
       var i = 0;
       for(var y = 0; y < rows_columns; y++){
         for(var x =0; x < rows_columns; x++){
