@@ -1,6 +1,7 @@
 "use strict";
 
 (function(){
+  
   window.addEventListener("load", load);
   var rows_columns = 4;
   var EX = 3;
@@ -26,7 +27,7 @@
           tile[i].onmouseover = highlight;
           tile[i].onmouseout = unhighlight;
           tile[i].onclick = clicktoMove;
-          //tile[i].style.backgroundPosition = (0 - 100 * x) + "px" + " " + (0 - 100 * y) + "px";
+          tile[i].style.backgroundPosition = (0 - 100 * x) + "px" + " " + (0 - 100 * y) + "px"; //Line to style each individual tile with picture.
           i++;         
         }
       }
@@ -40,7 +41,7 @@
       return false;
     }
   }
-
+  //Function to find coordinates of surrounding tiles and assist in determining possible moves
   function getSurrounding(){
     var up = "xy(" + EX + "," + (EY-1) + ")";
     var down = "xy(" + EX + "," + (EY+1) + ")";
@@ -57,23 +58,24 @@
     }
     return moveableTile;
   }
-
+  //Helper function to highlight movable piece
   function highlight(){
     if(moveable(this)){
       this.classList.add("movablepiece");
     }
   }
-
+  //Helper function to unhighlight movable piece when mouse removed
   function unhighlight(){
     if(moveable(this)){
       this.classList.remove("movablepiece");
     }
   }
+  //Helper function in moving tiles
   function clicktoMove(){
     moveTile(this);
   }
 
-  function moveTile(tile){
+  function moveTile(tile){ 
       var tempY = EY;
       var tempX = EX;
       if(moveable(tile)){
@@ -85,7 +87,7 @@
       }
   }
 
-  function shuffle(){
+  function shuffle(){ //Function to shuffle the tiles
     for (var i = 0; i < 1000; i++) {
       var surrounding = getSurrounding();
       var rand = parseInt(Math.random() * surrounding.length);
