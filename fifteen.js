@@ -3,19 +3,18 @@
 (function(){
   window.addEventListener("load", load);
   var rows_columns = 4;
-  var tileNode = document.createElement("empty");
   var EX = 3;
   var EY = 3;
+  document.getElementById("shufflebutton").onclick = function() {shuffle()}; 
 
-  function load(){
-    drawPuzzle();
+  function load(){   
+    drawPuzzle(); 
   }
 
 
-  function drawPuzzle(){  //Function to draw the puzzle area, FINISHED.
+  function drawPuzzle(){  //Function to draw the puzzle area
       var puzzleArea = document.getElementById("puzzlearea");
       var tile = puzzleArea.children;
-      puzzleArea.appendChild(tileNode);
       var i = 0;
       for(var y = 0; y < rows_columns; y++){
         for(var x =0; x < rows_columns; x++){
@@ -25,15 +24,16 @@
           tile[i].setAttribute("id", "xy(" + x + "," + y + ")");
           tile[i].onmouseover = highlight;
           tile[i].onmouseout = unhighlight;
+          tile[i].onclick = clicktoMove;
           //tile[i].style.backgroundPosition = (0 - 100 * x) + "px" + " " + (0 - 100 * y) + "px";
           i++;         
         }
       }
   }
 
-  function moveable(div){
+  function moveable(tile){
     var surrounding = getSurrounding();
-    if(surrounding.indexOf(div.getAttribute("id")) != -1){
+    if(surrounding.indexOf(tile.getAttribute("id")) != -1){
       return true;
     }else{
       return false;
@@ -49,7 +49,7 @@
     var surrounding = [up, down, left, right];
     var moveableTile= [];
 
-    for(var i = 0; i < moveableTile.length; i++){
+    for(var i = 0; i < surrounding.length; i++){
       if(document.getElementById(surrounding[i]) != null){
         moveableTile.push(surrounding[i]);
       }
@@ -59,19 +59,38 @@
 
   function highlight(){
     if(moveable(this)){
-      this.classList.add("moveablepiece");
+      this.classList.add("movablepiece");
     }
   }
 
   function unhighlight(){
     if(moveable(this)){
-      this.classList.remove("moveablepiece");
+      this.classList.remove("movablepiece");
     }
   }
   function clicktoMove(){
     moveTile(this);
   }
-  function moveTile(){
 
+  function moveTile(tile){
+      var tempY = EY;
+      var tempX = EX;
+      if(moveable(tile)){
+        EX = parseInt(tile.style.left)/100;
+        EY = parseInt(tile.style.top)/100;
+        tile.style.left = (tempX * 100) + "px";
+        tile.style.top = (tempY * 100) + "px";
+        tile.setAttribute("id", "xy(" + tempX + "," + tempY + ")");
+      }
   }
+
+  function shuffle(){
+    for (var i = 0; i < 1000; i++) {
+      var surrounding = getSurrounding();
+      var rand = parseInt(Math.random() * surrounding.length);
+      var tile = document.getElementById(surrounding[rand]);
+      moveTile(tile);
+    }
+  }
+
 })();
