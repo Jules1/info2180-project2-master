@@ -1,7 +1,7 @@
 "use strict";
 
 (function(){
-  
+
   window.addEventListener("load", load);
   var rows_columns = 4;
   var EX = 3;
