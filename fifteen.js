@@ -81,6 +81,21 @@
       if(moveable(tile)){
         EX = parseInt(tile.style.left)/100;
         EY = parseInt(tile.style.top)/100;
+        $(tile).fadeOut(300);        
+        tile.style.left = (tempX * 100) + "px";
+        tile.style.top = (tempY * 100) + "px";
+        tile.setAttribute("id", "xy(" + tempX + "," + tempY + ")");
+        $(tile).fadeIn(300);
+      }
+      
+  }
+
+  function shuffler(tile){ 
+      var tempY = EY;
+      var tempX = EX;
+      if(moveable(tile)){
+        EX = parseInt(tile.style.left)/100;
+        EY = parseInt(tile.style.top)/100;
         tile.style.left = (tempX * 100) + "px";
         tile.style.top = (tempY * 100) + "px";
         tile.setAttribute("id", "xy(" + tempX + "," + tempY + ")");
@@ -92,7 +107,7 @@
       var surrounding = getSurrounding();
       var rand = parseInt(Math.random() * surrounding.length);
       var tile = document.getElementById(surrounding[rand]);
-      moveTile(tile);
+      shuffler(tile);
     }
   }
 
